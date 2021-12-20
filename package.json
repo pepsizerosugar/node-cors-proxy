@@ -1,0 +1,28 @@
+{
+  "name": "cors-proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pepsizerosugar/node-cors-proxy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pepsizerosugar/node-cors-proxy/issues"
+  },
+  "homepage": "https://github.com/pepsizerosugar/node-cors-proxy#readme",
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "https": "^1.0.0",
+    "nodemon": "^2.0.15",
+    "request": "^2.88.2"
+  }
+}
