@@ -49,11 +49,8 @@ function sendRequest(req, res, endpoint) {
             } else if (isStringJson(jsonBody)) {
                 console.log("[INFO] Request: Response JSON string")
                 res.json(JSON.parse(JSON.stringify(jsonBody))).end();
-            } else {
-                console.log("[INFO] Request: Response no JSON")
-                res.end(txtBody);
             }
-
+        
             console.log(`[INFO] Request END: ${endpoint}`)
             console.log(`--------------------------------------------------------------------------------\n`)
         })
