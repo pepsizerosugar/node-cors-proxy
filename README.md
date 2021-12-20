@@ -33,7 +33,7 @@
 ### 1-3. Extra
 ```
 1. You can request with Parameters, Header and Body.
-2. Then server is request with that entities
+2. Then server is request with that entities.
 ```
 <br>
 
