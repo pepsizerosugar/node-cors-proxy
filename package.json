@@ -1,7 +1,7 @@
 {
   "name": "cors-proxy",
   "version": "1.0.0",
-  "description": "",
+  "description": "cors proxy for some reason",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -11,13 +11,20 @@
     "type": "git",
     "url": "git+https://github.com/pepsizerosugar/node-cors-proxy.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "cors",
+    "proxy"
+  ],
+  "author": {
+    "name": "Park Jun-beom",
+    "email": "juntiger53@gmail.com",
+    "Linkedin": "https://www.linkedin.com/in/parkjunbeom"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/pepsizerosugar/node-cors-proxy/issues"
   },
-  "homepage": "https://github.com/pepsizerosugar/node-cors-proxy#readme",
+  "homepage": "https://github.com/pepsizerosugar/node-cors-proxy/blob/main/README.md",
   "devDependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.2",
