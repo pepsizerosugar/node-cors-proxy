@@ -1,4 +1,4 @@
-const request = require('request');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const paramObject = require('../model/param')
 const headerObject = require('../model/header')
 const bodyObject = require('../model/body')
@@ -21,8 +21,7 @@ function sendRequest(req, res, endpoint) {
     console.log(`[INFO] ENDPOINT: ${endpoint}`)
 
     var config = {
-        method,
-        url: endpoint
+        method
     }
 
     if (Object.keys(params).length > 0)
@@ -40,30 +39,28 @@ function sendRequest(req, res, endpoint) {
 
     console.log(config);
 
-    request(config, function (error, response) {
-        if (error) {
-            console.error(`[ERROR] ${error}`)
-            res.json({"proxyMessage" : "error when request to target. check console error"}).end();
-        } else {
-            if (response != undefined && response.hasOwnProperty('body')) {
-                if (isJson(response.body)) {
-                    console.log("[INFO] Request: Response JSON object")
-                    res.json(JSON.parse(response.body)).end();
-                } else if (isStringJson(response.body)) {
-                    console.log("[INFO] Request: Response JSON string")
-                    res.json(JSON.parse(JSON.stringify(response.body))).end();
-                } else {
-                    console.log("[INFO] Request: Response body is not JSON")
-                    res.end(response.body);
-                }
+    await fetch(endpoint, config)
+        .then(async response => {
+            const jsonBody = await response.json();
+
+            if (isJson(jsonBody)) {
+                console.log("[INFO] Request: Response JSON object")
+                res.json(JSON.parse(jsonBody)).end();
+            } else if (isStringJson(jsonBody)) {
+                console.log("[INFO] Request: Response JSON string")
+                res.json(JSON.parse(JSON.stringify(jsonBody))).end();
             } else {
-                console.warn("[INFO] Request: No response")
-                res.json({"proxyMessage" : "no response from origin api."}).end();
+                console.log("[INFO] Request: Response no JSON")
+                res.end(txtBody);
             }
-        }
-        console.log(`[INFO] Request End: ${endpoint}`)
-        console.log(`--------------------------------------------------------------------------------\n`)
-    });
+
+            console.log(`[INFO] Request END: ${endpoint}`)
+            console.log(`--------------------------------------------------------------------------------\n`)
+        })
+        .catch(error => {
+            console.error(`[ERROR] ${error}`)
+            res.json(error).end();
+        });
 }
 
 function isJson(data) {
