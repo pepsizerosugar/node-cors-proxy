@@ -5,7 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/pepsizerosugar/node-cors-proxy/badge)](https://www.codefactor.io/repository/github/pepsizerosugar/node-cors-proxy)
 
 * cors proxy for some reason. 😉
-* If you have an problem, please leave a issue at github or email.
+* If you have a problem, please leave a issue at github or email.
 <br><br>
 
 ## 0. Change Log
