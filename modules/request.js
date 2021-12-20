@@ -30,10 +30,9 @@ function sendRequest(req, res, endpoint) {
         config['headers'] = headers;
     if (body.length > 0 || Object.keys(body).length > 0) {
         if (headers["content-type"] == "application/x-www-form-urlencoded") {
-            config['form'] = body;
+            config['body'] = new URLSearchParams(body);
         } else {
-            config['body'] = body;
-            config.json = true
+            config['body'] = JSON.stringify(body);
         }
     }
 
