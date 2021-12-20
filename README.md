@@ -30,6 +30,11 @@
   2-1. ex) your target API: https://openapi.naver.com/v1/nid/me
            then request like this: https:localhost:6789/https://openapi.naver.com/v1/nid/me
 ```
+### 1-3. Extra
+```
+1. You can request with Parameters, Header and Body.
+2. Then server is request with that entities
+```
 <br>
 
 ## 2. Example request log
