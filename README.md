@@ -30,3 +30,7 @@
   2-1. ex) your target API: https://openapi.naver.com/v1/nid/me
            then request like this: https:localhost:6789/https://openapi.naver.com/v1/nid/me
 ```
+<br>
+
+## 2. Example request log
+![request](https://user-images.githubusercontent.com/84403670/146704461-f116e0b9-2b93-4b39-80ae-4e2ee2e95bb3.PNG)
