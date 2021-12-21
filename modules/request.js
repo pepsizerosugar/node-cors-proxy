@@ -1,61 +1,74 @@
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const paramObject = require('../model/param')
-const headerObject = require('../model/header')
-const bodyObject = require('../model/body')
+const fs = require('fs');
 
-function sendRequest(req, res, endpoint) {
-    var method = req.method;
+async function sendRequest(res, config) {
+    const endpoint = config.url;
+    console.log(`[INFO] Request Endpoint: ${endpoint}`);
+    console.log(`[INFO] Request Info:`);
+    console.log(config.config);
 
-    const paramsObj = new paramObject();
-    paramsObj.addParam(req)
-    var params = paramsObj.getParam();
+    fetch.timeout = 0;
 
-    const headersObj = new headerObject();
-    headersObj.addHeader(req);
-    var headers = headersObj.getHeader();
-
-    const bodyObj = new bodyObject();
-    bodyObj.addBody(req);
-    var body = bodyObj.getBody();
-
-    console.log(`[INFO] ENDPOINT: ${endpoint}`)
-
-    var config = {
-        method
-    }
-
-    if (Object.keys(params).length > 0)
-        config['qs'] = params;
-    if (Object.keys(headers).length > 0)
-        config['headers'] = headers;
-    if (body.length > 0 || Object.keys(body).length > 0) {
-        if (headers["content-type"] == "application/x-www-form-urlencoded") {
-            config['body'] = new URLSearchParams(body);
-        } else {
-            config['body'] = JSON.stringify(body);
-        }
-    }
-
-    console.log(config);
-
-    await fetch(endpoint, config)
+    await fetch(endpoint, config.config)
         .then(async response => {
-            const jsonBody = await response.json();
-
-            if (isJson(jsonBody)) {
-                console.log("[INFO] Request: Response JSON object")
-                res.json(JSON.parse(jsonBody)).end();
-            } else if (isStringJson(jsonBody)) {
-                console.log("[INFO] Request: Response JSON string")
-                res.json(JSON.parse(JSON.stringify(jsonBody))).end();
+            const type = response.headers.get("content-type");
+            if (type) {
+                var check = 0;
+                if (type === "application/json") {
+                    await response.json().then(json => {
+                        if (isJson(jsonBody)) {
+                            var resBody = JSON.parse(jsonBody);
+                            console.log("[INFO] Request-response: Response JSON object");
+                            console.log(resBody);
+                            res.json(resBody).end();
+                        } else if (isStringJson(jsonBody)) {
+                            var resBody = JSON.parse(JSON.stringify(jsonBody));
+                            console.log("[INFO] Request-response: Response JSON string");
+                            console.log(resBody);
+                            res.json(resBody).end();
+                        } else {
+                            console.log("[INFO] Request-response: Response not JSON");
+                            console.log(jsonBody);
+                            res.send(jsonBody).end();
+                        }
+                        check = 1;
+                    });
+                }
+                if (type.match('image/*')) {
+                    var imageType = type.replace("image/", "");
+                    response.body.pipe(fs.createWriteStream(`./image/image.${imageType}`));
+                    res.json({ "proxyMessage": "Image saved" }).end();
+                    check = 1;
+                }
+                if (type.match('audio/*')) {
+                    var audioType = type.replace("audio/", "");
+                    response.body.pipe(fs.createWriteStream(`./audio/audio.${audioType}`));
+                    res.json({ "proxyMessage": "Audio saved" }).end();
+                    check = 1;
+                }
+                if (type.match('video/*')) {
+                    var videoType = type.replace("video/", "");
+                    response.body.pipe(fs.createWriteStream(`./video/video.${videoType}`));
+                    res.json({ "proxyMessage": "Video saved" }).end();
+                    check = 1;
+                }
+                if (check == 0) {
+                    await response.text().then(text => {
+                        console.log("[INFO] Request-response: Response have data");
+                        res.send(text).end();
+                    });
+                }
+            } else {
+                console.log("[INFO] Request-response: Response no data");
+                res.send(response).end();
             }
-        
-            console.log(`[INFO] Request END: ${endpoint}`)
-            console.log(`--------------------------------------------------------------------------------\n`)
+
+            console.log(`[INFO] Request End: ${endpoint}`);
+            console.log(`--------------------------------------------------------------------------------\n`);
         })
         .catch(error => {
             console.error(`[ERROR] ${error}`)
-            res.json(error).end();
+            res.send(error.toString()).end();
         });
 }
 
@@ -71,8 +84,7 @@ function isJson(data) {
 function isStringJson(data) {
     try {
         var json = JSON.parse(JSON.stringify(data));
-        if (typeof json === 'object')
-            return true;
+        return (typeof json === 'object');
     } catch (err) {
         return false;
     }

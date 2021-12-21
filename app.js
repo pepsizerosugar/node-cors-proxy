@@ -3,23 +3,23 @@ const app = express();
 const https = require('https');
 const cors = require('cors');
 const fs = require('fs');
+const { init } = require('./modules/initialize');
 const { sendRequest } = require('./modules/request');
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
-app.use(cors({
-    origin: '*'
-}));
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.all(':endpoint([\\/\\w\\.-]*)', function (req, res) {
-    var realUrl = req.params.endpoint;
-    if (realUrl != "/favicon.ico") {
-        const endpoint = realUrl.substring(1, realUrl.length)
-        console.log(`\n--------------------------------------------------------------------------------`)
-        console.log(`[INFO] Request: Start`)
-        sendRequest(req, res, endpoint);
+app.all(':endpoint([\\/\\w\\.-]*)', async (req, res) => {
+    const target = req.params.endpoint;
+    if (target != "/favicon.ico") {
+        const endpoint = target.substring(1, target.length);
+        console.log(`\n--------------------------------------------------------------------------------`);
+        console.log(`[INFO] Request: Start`);
+        const config = init(req, endpoint);
+        await sendRequest(res, config);
     }
 });
 
@@ -30,4 +30,5 @@ const httpsOptions = {
     cert: fs.readFileSync(__dirname + '/cert/cert.pem', 'utf8'),
 }
 
-https.createServer(httpsOptions, app).listen(PORT, IP, () => console.log(`[INFO] Listening on IP: ${IP} Port: ${PORT}`));
+https.createServer(httpsOptions, app)
+    .listen(PORT, IP, () => console.log(`[INFO] Listening on IP: ${IP} Port: ${PORT}`));

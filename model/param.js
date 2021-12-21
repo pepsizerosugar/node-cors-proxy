@@ -14,7 +14,7 @@ class paramObject {
     }
 
     getParam() {
-        return this.params
+        return new URLSearchParams(this.params)
     }
 }
 

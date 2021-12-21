@@ -1,6 +1,11 @@
 # VS Code
 .vscode
 
+# Project
+image
+video
+audio
+
 # Logs
 logs
 *.log

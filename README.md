@@ -1,6 +1,6 @@
 # node-cors-proxy
 
-![Version](https://img.shields.io/badge/Version-1.0.0-green)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/pepsizerosugar/node-cors-proxy?color=g)
 ![Version](https://img.shields.io/badge/Update-2021.12.20-yellow)
 [![CodeFactor](https://www.codefactor.io/repository/github/pepsizerosugar/node-cors-proxy/badge)](https://www.codefactor.io/repository/github/pepsizerosugar/node-cors-proxy)
 
@@ -9,9 +9,16 @@
 <br><br>
 
 ## 0. Change Log
-### version 1.0.0 (2021.12.20)
+### version 1.1.0 (2021.12.21)
 ```
-1. Initialize project repo
+1. Fixed when response is not json body
+  1-1. add image response to download
+  1-2. add response to not json body
+2. Sperated request module
+  2-1. request, initalize
+3. To deal with MIME content-type
+  3-1. save audio, image, video
+  3-2. other MIME types gonna be text/plain reponse
 ```
 <br>
 

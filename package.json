@@ -1,6 +1,6 @@
 {
   "name": "cors-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "cors proxy for some reason",
   "main": "app.js",
   "scripts": {
