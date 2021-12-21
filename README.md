@@ -26,7 +26,7 @@
   1-1. default server adress is https://localhost:6789
   1-2. You can change the server IP and PORT
     1-2-1. IP & PORT can assaign with environment variables (IP, PORT)
-2. Request you request!
+2. Request your request!
   2-1. ex) your target API: https://openapi.naver.com/v1/nid/me
            then request like this: https:localhost:6789/https://openapi.naver.com/v1/nid/me
 ```
