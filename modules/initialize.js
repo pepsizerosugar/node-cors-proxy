@@ -28,7 +28,7 @@ function init(req, endpoint) {
         var body = bodyObj.getBody();
 
         if (body.length > 0 || Object.keys(body).length > 0) {
-            if (headers["content-type"] == "application/x-www-form-urlencoded") {
+            if (req.headers["content-type"] == "application/x-www-form-urlencoded") {
                 config['body'] = new URLSearchParams(body);
             } else {
                 config['body'] = JSON.stringify(body);

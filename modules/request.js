@@ -16,20 +16,20 @@ async function sendRequest(res, config) {
                 var check = 0;
                 if (type === "application/json") {
                     await response.json().then(json => {
-                        if (isJson(jsonBody)) {
-                            var resBody = JSON.parse(jsonBody);
+                        if (isJson(json)) {
+                            var resBody = JSON.parse(json);
                             console.log("[INFO] Request-response: Response JSON object");
                             console.log(resBody);
                             res.json(resBody).end();
-                        } else if (isStringJson(jsonBody)) {
-                            var resBody = JSON.parse(JSON.stringify(jsonBody));
+                        } else if (isStringJson(json)) {
+                            var resBody = JSON.parse(JSON.stringify(json));
                             console.log("[INFO] Request-response: Response JSON string");
                             console.log(resBody);
                             res.json(resBody).end();
                         } else {
                             console.log("[INFO] Request-response: Response not JSON");
-                            console.log(jsonBody);
-                            res.send(jsonBody).end();
+                            console.log(json);
+                            res.send(json).end();
                         }
                         check = 1;
                     });

@@ -1,7 +1,7 @@
 # node-cors-proxy
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/pepsizerosugar/node-cors-proxy?color=g)
-![Version](https://img.shields.io/badge/Update-2021.12.20-yellow)
+![Version](https://img.shields.io/badge/Update-2021.12.21-yellow)
 [![CodeFactor](https://www.codefactor.io/repository/github/pepsizerosugar/node-cors-proxy/badge)](https://www.codefactor.io/repository/github/pepsizerosugar/node-cors-proxy)
 
 * cors proxy for some reason. 😉
