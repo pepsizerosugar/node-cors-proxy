@@ -9,16 +9,10 @@
 <br><br>
 
 ## 0. Change Log
-### version 1.1.0 (2021.12.21)
+### version 1.2.0 (2022.01.13)
 ```
-1. Fixed when response is not json body
-  1-1. add image response to download
-  1-2. add response to not json body
-2. Sperated request module
-  2-1. request, initalize
-3. To deal with MIME content-type
-  3-1. save audio, image, video
-  3-2. other MIME types gonna be text/plain reponse
+1. Fixed when target URL is empty
+2. Merge model object to requestObject
 ```
 <br>
 
