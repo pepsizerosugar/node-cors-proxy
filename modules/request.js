@@ -68,7 +68,7 @@ async function sendRequest(res, config) {
         })
         .catch(error => {
             console.error(`[ERROR] ${error}`)
-            res.send(error.toString()).end();
+            res.send({ "proxyMessage": error.toString() }).end();
         });
 }
 

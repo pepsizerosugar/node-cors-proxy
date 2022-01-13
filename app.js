@@ -13,12 +13,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.all(':endpoint([\\/\\w\\.-]*)', async (req, res) => {
-    const target = req.params.endpoint;
-    if (target != "/favicon.ico") {
-        const endpoint = target.substring(1, target.length);
+    var target = req.params.endpoint;
+    target = target.substring(1, target.length);
+
+    if (!target || !target.match(/^(https?:\/\/)/)) {
+        res.json({ "proxyMessage": "Invalid URL" }).end();
+    } else if (target != '/favicon.ico') {
+        const endpoint = target;
         console.log(`\n--------------------------------------------------------------------------------`);
         console.log(`[INFO] Request: Start`);
-        const config = init(req, endpoint);
+        const config = await init(req, endpoint);
         await sendRequest(res, config);
     }
 });

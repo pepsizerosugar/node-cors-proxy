@@ -1,48 +1,59 @@
-const paramObject = require('../model/param')
-const headerObject = require('../model/header')
-const bodyObject = require('../model/body')
+const requestObject = require('../model/request');
 const fs = require('fs');
 
 function init(req, endpoint) {
-    var config = {
-        method: req.method
-    }
+    return new Promise((resolve) => {
+        mkdir()
+            .then(async () => {
+                await settingConfig(req, endpoint)
+                    .then(([url, config]) => {
+                        resolve({ url, config });
+                    })
+                    .catch(console.log);
+            })
+            .catch(console.log);;
+    })
+}
 
-    var url = new URL(endpoint);
-
-    if (Object.keys(req.query).length > 0) {
-        const paramsObj = new paramObject();
-        paramsObj.addParam(req);
-        url.search = paramsObj.getParam().toString();
-    }
-
-    if (Object.keys(req.headers).length > 0) {
-        const headersObj = new headerObject();
-        headersObj.addHeader(req);
-        config['headers'] = headersObj.getHeader();
-    }
-
-    if (req.body) {
-        const bodyObj = new bodyObject();
-        bodyObj.addBody(req);
-        var body = bodyObj.getBody();
-
-        if (body.length > 0 || Object.keys(body).length > 0) {
-            if (req.headers["content-type"] == "application/x-www-form-urlencoded") {
-                config['body'] = new URLSearchParams(body);
-            } else {
-                config['body'] = JSON.stringify(body);
+function settingConfig(req, endpoint) {
+    const requestObj = new requestObject();
+    return new Promise((resolve) => {
+        try {
+            var url = new URL(endpoint);
+            if (Object.keys(req.query).length > 0) {
+                requestObj.addParam('params', req);
+                url.search = requestObj.getParam().toString();
             }
-        }
-    }
-    if (!fs.existsSync('./image'))
-        fs.mkdirSync('./image', { recursive: true });
-    if (!fs.existsSync('./audio'))
-        fs.mkdirSync('./audio', { recursive: true });
-    if (!fs.existsSync('./video'))
-        fs.mkdirSync('./video', { recursive: true });
 
-    return { url, config }
+            if (Object.keys(req.headers).length > 0) {
+                requestObj.addHeader('headers', req);
+            }
+
+            requestObj.addBody(req, (result) => {
+                if (result) {
+                    console.log(`[INFO] Request Setting End`);
+                    resolve([url, requestObj.getConfig()]);
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    });
+}
+
+function mkdir() {
+    return new Promise((resolve) => {
+        try {
+            if (!fs.existsSync('./image'))
+                fs.mkdirSync('./image', { recursive: true });
+            if (!fs.existsSync('./audio'))
+                fs.mkdirSync('./audio', { recursive: true });
+            if (!fs.existsSync('./video'))
+                fs.mkdirSync('./video', { recursive: true });
+        } finally {
+            resolve(true);
+        }
+    });
 }
 
 module.exports = {
