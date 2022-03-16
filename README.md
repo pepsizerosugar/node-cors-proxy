@@ -1,7 +1,7 @@
 # node-cors-proxy
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/pepsizerosugar/node-cors-proxy?color=g)
-![Version](https://img.shields.io/badge/Update-2022.01.13-yellow)
+![Version](https://img.shields.io/badge/Update-2022.03.16-yellow)
 [![CodeFactor](https://www.codefactor.io/repository/github/pepsizerosugar/node-cors-proxy/badge)](https://www.codefactor.io/repository/github/pepsizerosugar/node-cors-proxy)
 
 * cors proxy for some reason. 😉
@@ -9,10 +9,10 @@
 <br><br>
 
 ## 0. Change Log
-### version 1.2.0 (2022.01.13)
+### version 1.2.1 (2022.03.16)
 ```
-1. Fixed when target URL is empty
-2. Merge model object to requestObject
+1. Changed variable type var to let.
+2. Changed parsing logic that response from origin.
 ```
 <br>
 
