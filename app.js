@@ -13,12 +13,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.all(':endpoint([\\/\\w\\.-]*)', async (req, res) => {
-    var target = req.params.endpoint;
+    let target = req.params.endpoint;
     target = target.substring(1, target.length);
 
     if (!target || !target.match(/^(https?:\/\/)/)) {
         res.json({ "proxyMessage": "Invalid URL" }).end();
-    } else if (target != '/favicon.ico') {
+    } else if (target !== '/favicon.ico') {
         const endpoint = target;
         console.log(`\n--------------------------------------------------------------------------------`);
         console.log(`[INFO] Request: Start`);

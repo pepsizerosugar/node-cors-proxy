@@ -4,7 +4,7 @@ class requestObject {
     }
 
     addElement(type, data) {
-        if (type == 'method' || type == 'body') {
+        if (type === 'method' || type === 'body') {
             this.config[type] = data;
         }
         else {
@@ -35,7 +35,7 @@ class requestObject {
             this.addElement('body', req.body);
             cb(true);
         } else {
-            var body = [];
+            let body = [];
             req.on('error', (err) => {
                 console.error(err);
             }).on('data', (chunk) => {

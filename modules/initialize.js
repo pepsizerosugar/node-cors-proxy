@@ -11,7 +11,7 @@ function init(req, endpoint) {
                     })
                     .catch(console.log);
             })
-            .catch(console.log);;
+            .catch(console.log);
     })
 }
 
@@ -19,7 +19,7 @@ function settingConfig(req, endpoint) {
     const requestObj = new requestObject();
     return new Promise((resolve) => {
         try {
-            var url = new URL(endpoint);
+            let url = new URL(endpoint);
             if (Object.keys(req.query).length > 0) {
                 requestObj.addParam('params', req);
                 url.search = requestObj.getParam().toString();
