@@ -27,7 +27,7 @@
   "homepage": "https://github.com/pepsizerosugar/node-cors-proxy/blob/main/README.md",
   "devDependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.3",
+    "express": "^4.21.1",
     "https": "^1.0.0",
     "node-fetch": "^3.1.1",
     "nodemon": "^2.0.15",
